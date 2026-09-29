@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>食乜好？ · Sik Mat Ho?</title>
+    <meta name="theme-color" content="#1d2720" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="grain"></div>
+    <header class="topbar">
+      <a class="brand" href="#decide" aria-label="食乜好首页"><span class="brand-mark">食</span><span>食乜好？</span></a>
+      <nav aria-label="主菜单">
+        <a class="nav-link active" href="#decide" data-view="decide">揀食</a>
+        <a class="nav-link" href="#history" data-view="history">开餐簿</a>
+        <a class="nav-link" href="#library" data-view="library">食肆库</a>
+      </nav>
+      <button class="text-button" id="quickRecord">记低今餐 <span>↗</span></button>
+    </header>
+
+    <main>
+      <section class="view active" id="decide">
+        <div class="hero">
+          <p class="eyebrow">CAMPUS FOOD DECIDER · 今日食咩好？</p>
+          <h1>呢一餐，<em>交畀我。</em></h1>
+          <p class="hero-copy">想好去边、想食咩，再由我帮你落最后一槌。真系谂唔到？照样得。</p>
+          <div class="decision-grid">
+            <div class="filter-card">
+              <div class="filter-heading"><span>01</span><p>想去边度食？</p><button class="clear-filter" data-clear="area">唔限</button></div>
+              <div class="chip-set" id="areaFilters"></div>
+            </div>
+            <div class="filter-card">
+              <div class="filter-heading"><span>02</span><p>想食边一类？</p><button class="clear-filter" data-clear="type">唔限</button></div>
+              <div class="chip-set" id="typeFilters"></div>
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="primary-button" id="decideButton"><span class="dice">✦</span>帮我揀一间</button>
+            <p id="matchText">你嘅餐饮库有 <strong>0</strong> 个地方等紧你。</p>
+          </div>
+        </div>
+        <section class="result-card hidden" id="resultCard" aria-live="polite">
+          <div class="result-label">今日食呢间</div>
+          <div class="result-main">
+            <div><p class="result-area" id="resultArea"></p><h2 id="resultName"></h2><p class="result-meta" id="resultMeta"></p></div>
+            <div class="result-tags" id="resultTags"></div>
+          </div>
+          <p class="result-note" id="resultNote"></p>
+          <div class="result-actions"><button class="secondary-button" id="redrawButton">唔系好啱，再揀过</button><button class="primary-button small" id="eatThisButton">就食呢间，记低佢</button></div>
+        </section>
+        <section class="latest-section">
+          <div class="section-title"><div><p class="eyebrow">RECENTLY</p><h2>最近食过</h2></div><button class="text-button" data-go="history">睇晒开餐簿 ↗</button></div>
+          <div class="recent-list" id="recentList"></div>
+        </section>
+      </section>
+
+      <section class="view" id="history">
+        <div class="page-heading"><p class="eyebrow">YOUR MEAL DIARY</p><h1>开餐簿</h1><p>唔使写到好详细，记得低每一餐已经好叻。</p></div>
+        <div class="history-summary" id="historySummary"></div>
+        <div class="section-title diary-title"><h2>呢排食咗咩？</h2><button class="primary-button small" id="historyRecord">+ 记低一餐</button></div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="view" id="library">
+        <div class="page-heading library-heading"><div><p class="eyebrow">YOUR PERSONAL FOOD MAP</p><h1>食肆库</h1><p>你熟悉嘅窗口同铺头，全部收喺度。</p></div><button class="primary-button" id="addPlace">+ 加一间新嘢</button></div>
+        <div class="library-toolbar"><label class="search"><span>⌕</span><input id="searchPlaces" type="search" placeholder="搵下有冇呢间…" /></label><select id="libraryArea"><option value="">全部区域</option></select><span class="place-count" id="placeCount"></span></div>
+        <div class="place-grid" id="placeGrid"></div>
+      </section>
+    </main>
+
+    <dialog id="recordDialog" class="dialog"><form method="dialog" id="recordForm"><div class="dialog-heading"><div><p class="eyebrow">MEAL LOG</p><h2>记低呢一餐</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div><label>食咗边间？<select name="placeId" id="recordPlace" required></select></label><div class="two-col"><label>食咗咩？<input name="meal" placeholder="例：滑蛋叉烧饭" /></label><label>大约几钱？<input name="price" type="number" min="0" placeholder="￥" /></label></div><label>食完感觉点？<div class="mood-row"><button type="button" class="mood-choice selected" data-mood="正">正</button><button type="button" class="mood-choice" data-mood="唔错">唔错</button><button type="button" class="mood-choice" data-mood="普通">普通</button></div><input type="hidden" name="mood" value="正" /></label><label>想记低嘅话<input name="note" placeholder="例：今日个汁好多，下次都想食" /></label><div class="dialog-actions"><button class="secondary-button" value="cancel">迟啲先</button><button class="primary-button small" value="default">好，记低咗</button></div></form></dialog>
+
+    <dialog id="placeDialog" class="dialog"><form method="dialog" id="placeForm"><div class="dialog-heading"><div><p class="eyebrow">FOOD LIBRARY</p><h2 id="placeDialogTitle">加一间新嘢</h2></div><button class="icon-button" value="cancel" aria-label="关闭">×</button></div><input type="hidden" name="id" /><label>名称<input name="name" required placeholder="例：潮汕牛肉粿条" /></label><div class="two-col"><label>区域<select name="area" id="placeArea" required></select></label><label>类型<select name="type" id="placeType" required></select></label></div><label>位置 / 方便你认路<input name="location" required placeholder="例：榕园食堂二楼" /></label><div class="two-col"><label>价位<input name="priceRange" placeholder="例：¥18–25" /></label><label>口味标签（用逗号隔开）<input name="tags" placeholder="例：鲜,汤粉,不辣" /></label></div><label>你对佢嘅一句话<input name="note" placeholder="例：赶时间就食佢，稳阵。" /></label><div class="dialog-actions"><button class="secondary-button" value="cancel">算啦</button><button class="primary-button small" value="default">存入食肆库</button></div></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
